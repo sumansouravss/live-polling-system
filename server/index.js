@@ -16,6 +16,7 @@ const io = socketIo(server, {
 app.use(cors());
 app.use(express.json());
 
+// ✅ MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -25,10 +26,15 @@ const Poll = require('./models/Poll');
 
 let currentPoll = null;
 let answers = {};
-let submitted = new Set(); // ⛔ Track who already submitted
+let submitted = new Set();
 let students = {};
 
-// 🔴 Poll History API
+// ✅ Optional health check route
+app.get('/', (req, res) => {
+  res.send('Live Polling Backend is running!');
+});
+
+// ✅ Poll history route
 app.get('/api/polls', async (req, res) => {
   try {
     const polls = await Poll.find({}).sort({ createdAt: -1 }).limit(10);
@@ -38,76 +44,71 @@ app.get('/api/polls', async (req, res) => {
   }
 });
 
-// 🔌 Socket Events
+// ✅ Socket.IO Events
 io.on('connection', (socket) => {
   console.log(`New client connected: ${socket.id}`);
 
- socket.on('create_poll', async ({ question, options }) => {
-  if (currentPoll && currentPoll.isActive) {
-    socket.emit('error_message', 'A poll is already active. Wait for it to finish.');
-    return;
-  }
+  socket.on('create_poll', async ({ question, options }) => {
+    if (currentPoll && currentPoll.isActive) {
+      socket.emit('error_message', 'A poll is already active. Wait for it to finish.');
+      return;
+    }
 
-  currentPoll = new Poll({ question, options, isActive: true });
-  answers = {};
-  await currentPoll.save();
+    currentPoll = new Poll({ question, options, isActive: true });
+    answers = {};
+    submitted.clear();
+    await currentPoll.save();
 
-  io.emit('new_poll', currentPoll);
+    io.emit('new_poll', currentPoll);
 
-  setTimeout(() => {
-   currentPoll.isActive = false;
-currentPoll.responses = answers;
-currentPoll.save();
+    setTimeout(() => {
+      currentPoll.isActive = false;
+      currentPoll.responses = answers;
+      currentPoll.save();
 
-io.emit('poll_result', answers);
-currentPoll = null;
-  }, 60000);
-});
+      io.emit('poll_result', answers);
+      currentPoll = null;
+    }, 60000); // 60 seconds
+  });
 
+  socket.on('submit_answer', ({ option }) => {
+    if (!currentPoll || !currentPoll.isActive) return;
+    if (submitted.has(socket.id)) return;
 
-socket.on('submit_answer', ({ option }) => {
-  if (!currentPoll || !currentPoll.isActive) return;
-  if (submitted.has(socket.id)) return; // Prevent multiple votes
-
-  submitted.add(socket.id);
-  answers[option] = (answers[option] || 0) + 1;
-  io.emit('poll_result', answers);
-});
+    submitted.add(socket.id);
+    answers[option] = (answers[option] || 0) + 1;
+    io.emit('poll_result', answers);
+  });
 
   socket.on('chat_message', ({ user, msg }) => {
-  io.emit('chat_message', { user, msg });
-});
+    io.emit('chat_message', { user, msg });
+  });
 
-socket.on('request_result', () => {
-  if (!currentPoll || !currentPoll.responses) return;
-  socket.emit('poll_result', currentPoll.responses);
-});
+  socket.on('request_result', () => {
+    if (!currentPoll || !currentPoll.responses) return;
+    socket.emit('poll_result', currentPoll.responses);
+  });
 
+  socket.on('student_join', (name) => {
+    students[socket.id] = name;
+    io.emit('student_list', Object.entries(students).map(([id, name]) => ({ id, name })));
+  });
+
+  socket.on('kick_student', (id) => {
+    io.to(id).emit('kicked');
+    delete students[id];
+    io.emit('student_list', Object.entries(students).map(([id, name]) => ({ id, name })));
+  });
 
   socket.on('disconnect', () => {
     console.log(`Client disconnected: ${socket.id}`);
+    delete students[socket.id];
+    io.emit('student_list', Object.entries(students).map(([id, name]) => ({ id, name })));
   });
-  socket.on('student_join', (name) => {
-  students[socket.id] = name;
-  io.emit('student_list', Object.entries(students).map(([id, name]) => ({ id, name })));
-});
-socket.on('kick_student', (id) => {
-  io.to(id).emit('kicked');
-  delete students[id];
-  io.emit('student_list', Object.entries(students).map(([id, name]) => ({ id, name })));
-});
-socket.on('disconnect', () => {
-  delete students[socket.id];
-  io.emit('student_list', Object.entries(students).map(([id, name]) => ({ id, name })));
 });
 
-
-
-
-
-});
-
-
-server.listen(5000, () => {
-  console.log('Server is running on port 5000');
+// ✅ Dynamic port binding for Render
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
