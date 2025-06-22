@@ -1,0 +1,161 @@
+.teacher-poll {
+  max-width: 650px;
+  margin: 4rem auto;
+  text-align: center;
+  padding: 2rem;
+}
+
+.badge {
+  background-color: #7765da;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.light {
+  font-weight: 300;
+}
+.bold {
+  font-weight: 700;
+}
+
+p {
+  font-size: 16px;
+  color: #666666;
+  margin-bottom: 24px;
+}
+
+.question-area {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 24px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.question-area input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.question-area select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.option-section {
+  margin-top: 1rem;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.option-row input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.option-row label {
+  font-size: 14px;
+}
+
+.add-option {
+  background: transparent;
+  color: #7765da;
+  border: none;
+  margin: 12px 0;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.primary-button {
+  background-color: #7765da;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.question-box {
+  background: #f2f2f2;
+  padding: 16px;
+  border-radius: 10px;
+  font-weight: 500;
+  margin: 20px 0;
+}
+
+.results-box {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.result-bar {
+  margin-bottom: 16px;
+}
+
+.result-bar .label {
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.bar-track {
+  background: #eee;
+  border-radius: 8px;
+  height: 24px;
+  position: relative;
+}
+
+.bar-fill {
+  background-color: #7765da;
+  height: 100%;
+  border-radius: 8px;
+  color: white;
+  text-align: right;
+  padding-right: 8px;
+  line-height: 24px;
+  font-size: 14px;
+}
+.student-list {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+.student-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.student-row button {
+  background-color: #ff5252;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}

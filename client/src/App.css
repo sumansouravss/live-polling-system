@@ -1,0 +1,99 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+/* Global reset */
+* {
+  box-sizing: border-box;
+}
+
+/* Mobile base adjustments */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #fff;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+  .student-poll,
+  .teacher-poll,
+  .poll-history,
+  .dashboard {
+    padding: 1rem;
+    margin: 1rem auto;
+  }
+
+  .question-area,
+  .option-row,
+  .dashboard-options {
+    flex-direction: column !important;
+    align-items: stretch;
+  }
+
+  .question-area input,
+  .option-row input,
+  .question-area select {
+    width: 100% !important;
+  }
+
+  .primary-button,
+  .add-option,
+  .student-row button {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .dashboard-card {
+    padding: 16px;
+  }
+
+  .chat-wrapper {
+    right: 10px;
+    bottom: 10px;
+    width: 90%;
+  }
+
+  .chat-box {
+    width: 100%;
+  }
+}
+
+
+
+
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

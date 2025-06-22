@@ -1,0 +1,58 @@
+.dashboard {
+  max-width: 700px;
+  margin: 4rem auto;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.badge {
+  background-color: #7765da;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 16px;
+  color: #555;
+}
+
+.dashboard-options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 2rem;
+}
+
+.dashboard-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  background-color: #f8f8ff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-card:hover {
+  background-color: #ecebff;
+  border-color: #7765da;
+}
+
+.dashboard-card h3 {
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.dashboard-card p {
+  margin: 0;
+  color: #666;
+}

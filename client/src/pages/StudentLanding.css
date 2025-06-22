@@ -1,0 +1,59 @@
+.student-landing {
+  max-width: 600px;
+  margin: 4rem auto;
+  text-align: center;
+  padding: 2rem;
+}
+
+.badge {
+  background-color: #7765da;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+h1 .light {
+  font-weight: 300;
+}
+
+h1 .bold {
+  font-weight: 700;
+}
+
+p {
+  font-size: 16px;
+  color: #666666;
+  margin-bottom: 24px;
+}
+
+input {
+  padding: 10px 16px;
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.primary-button {
+  background-color: #7765da;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.primary-button:hover {
+  background-color: #4f40ce;
+}
